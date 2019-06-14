@@ -1,0 +1,49 @@
+#!/bin/bash
+clear
+cd /etc
+## Test if the local host is Arch-based
+if [ -d /etc/pacman.d ]
+    then 
+        ## run the Arch version of the update-command
+        sudo pacman -Syyu
+
+		orphans=$(sudo pacman -Qdt)
+		if [ -z "$orphans" ]
+		then
+			echo No oprhans
+		else
+			echo ==============
+			echo Remove Orphans
+			echo ==============
+			sudo pacman -Rsn '$(sudo pacman -Qdtq)'
+		fi
+		
+		echo ====================
+		read -e -p "Update AUR Packages? " -i "Y" REPLY
+		echo ====================
+		if [[ $REPLY =~ ^[Yy]$ ]]
+		then
+		#sudo echo "SUDO HACK"
+		user=$(whoami)
+		echo "Change user to '\$(whoami)'"
+		yay -Syu --noconfirm
+		fi
+fi 
+
+## Test if the local host is debian-based
+if [ -d /etc/apt ]
+    then
+        ## run the Debian version of the update-command
+        sudo apt-get update && apt-get dist-upgrade
+        sudo apt autoremove
+        sudo apt clean
+fi
+
+## Test if the local host is RedHat based
+if [ -d /etc/yum ]
+    then
+        ## run the RedHat version of the update-command
+        sudo yum check-update && yum update
+        sudo yum clean all
+fi
+
