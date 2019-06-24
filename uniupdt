@@ -6,17 +6,7 @@ if [ -d /etc/pacman.d ]
     then 
         ## run the Arch version of the update-command
         sudo pacman -Syyu
-
-		orphans=$(sudo pacman -Qdt)
-		if [ -z "$orphans" ]
-		then
-			echo No oprhans
-		else
-			echo ==============
-			echo Remove Orphans
-			echo ==============
-			sudo pacman -Rsn '$(sudo pacman -Qdtq)'
-		fi
+	sudo pacman -Rsn '$(sudo pacman -Qdtq)'
 		
 		echo ====================
 		read -e -p "Update AUR Packages? " -i "Y" REPLY

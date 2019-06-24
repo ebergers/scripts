@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# Dit script is gemaakt op: vr 31 mei 2019 16:41:15 CEST
+
+cat $HOME/.scripts/stuf/keys
+
